@@ -1,3 +1,4 @@
+import opts from './commandOptions';
 import * as JsonPointer from './jsonPointer';
 import { SchemaId } from './schemaid';
 import * as utils from './utils';
@@ -73,7 +74,9 @@ export class TypeDefinition {
                     p = this.searchRef(process, p.$ref).targetSchema;
                     p = this.checkSchema(process, p);
                 }
-                utils.mergeSchema(schema, p);
+                if (!opts.arithmetic) {
+                    utils.mergeSchema(schema, p);
+                }
             });
             return schema;
         }
@@ -167,6 +170,16 @@ export class TypeDefinition {
         const anyOf = property.anyOf || property.oneOf;
         if (anyOf) {
             this.generateArrayedType(process, anyOf, ' | ', terminate);
+            if (terminate) {
+                process.outputLine(';');
+            }
+            return;
+        }
+        if (property.allOf && opts.arithmetic) {
+            this.generateArrayedType(process, property.allOf, ' & ', false);
+            if (terminate) {
+                process.outputLine(';');
+            }
             return;
         }
         if (property.enum) {
@@ -254,21 +267,21 @@ export class TypeDefinition {
     }
 
     private generateArrayedType(process: WriteProcessor, types: JsonSchemaOrg.Schema[], separator: string, terminate: boolean): void {
-        if (!terminate) {
+        if (!terminate && types.length > 1 && separator.match(/\|/)) {
             process.output('(');
         }
         types.forEach((type: JsonSchemaOrg.Schema, index: number) => {
             const isLast = index === types.length - 1;
             if (type.id) {
-                this.generateTypePropertyNamedType(process, this.getTypename(type.id), false, type, isLast && terminate);
+                this.generateTypePropertyNamedType(process, this.getTypename(type.id), false, type, false);
             } else {
-                this.generateTypeProperty(process, type, isLast && terminate);
+                this.generateTypeProperty(process, type, false);
             }
             if (!isLast) {
                 process.output(separator);
             }
         });
-        if (!terminate) {
+        if (!terminate && types.length > 1 && separator.match(/\|/)) {
             process.output(')');
         }
     }
@@ -337,4 +350,3 @@ export class TypeDefinition {
         }
     }
 }
-

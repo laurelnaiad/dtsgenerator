@@ -33,6 +33,7 @@ describe('output command help test', () => {
     --stdin                            read stdin with other files or urls.
     -o, --out <file>                   output d.ts filename.
     -p, --prefix <type prefix>         set the prefix of interface name. default is nothing.
+    -a, --arithmetic                   use \`&\` intersection for \`allOf\` schemas.
     -H, --header <type header string>  set the string of type header.
     -t, --target [version]             set target TypeScript version. select from \`v2\` or \`v1\`. default is \`v2\`.
     -h, --help                         output usage information
