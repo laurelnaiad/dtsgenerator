@@ -6,7 +6,7 @@ import ReferenceResolver from './referenceResolver';
 import SchemaConvertor from './schemaConvertor';
 import * as utils from './utils';
 
-const debug = Debug('dtsgen');
+const debug = Debug('dtsintergen');
 const typeMarker = Symbol();
 
 export default class DtsGenerator {

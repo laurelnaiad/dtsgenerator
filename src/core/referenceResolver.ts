@@ -4,7 +4,7 @@ import { parseFileContent } from '../utils';
 import { getSubSchema, parseSchema, Schema, searchAllSubSchema } from './jsonSchema';
 import SchemaId from './schemaId';
 
-const debug = Debug('dtsgen');
+const debug = Debug('dtsintergen');
 
 export default class ReferenceResolver {
     private readonly schemaCache = new Map<string, Schema>();

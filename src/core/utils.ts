@@ -1,7 +1,7 @@
 import Debug from 'debug';
 import SimpleTypes = JsonSchemaOrg.Draft04.Schema.Definitions.SimpleTypes;
 
-const debug = Debug('dtsgen');
+const debug = Debug('dtsintergen');
 
 export function toTSType(type: string, debugSource?: any): string | undefined {
     switch (type) {
