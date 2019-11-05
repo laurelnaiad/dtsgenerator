@@ -160,17 +160,17 @@ export default class SchemaConvertor {
         }
     }
 
-    public outputArrayedType<T>(schema: NormalizedSchema, types: T[], output: (t: T, index: number) => void, terminate: boolean, outputOptional = true): void {
-        if (!terminate) {
+    public outputArrayedType<T>(schema: NormalizedSchema, types: T[], separator: string, output: (t: T, index: number) => void, terminate: boolean, outputOptional = true): void {
+        if (!terminate && types.length > 1 && separator.match(/\|/)) {
             this.processor.output('(');
         }
         types.forEach((t, index) => {
             output(t, index);
             if (index < types.length - 1) {
-                this.processor.output(' | ');
+                this.processor.output(separator);
             }
         });
-        if (!terminate) {
+        if (!terminate && types.length > 1 && separator.match(/\|/)) {
             this.processor.output(')');
         }
         this.outputTypeNameTrailer(schema, terminate, outputOptional);
