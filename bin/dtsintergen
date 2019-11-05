@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+/* tslint:disable */
+require('../dist/cli');

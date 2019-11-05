@@ -1,9 +1,9 @@
 {
-  "name": "dtsgenerator",
+  "name": "dtsintergen",
   "version": "2.3.1",
-  "description": "TypeScript d.ts file generator for JSON Schema file",
+  "description": "TypeScript d.ts file generator for JSON Schema files, with generation of intersection types. Fork of horiuchi/dtsgenerator.",
   "bin": {
-    "dtsgen": "./bin/dtsgen"
+    "dtsintergen": "./bin/dtsintergen"
   },
   "main": "dist/core/",
   "typings": "dist/core/index.d.ts",
@@ -27,17 +27,20 @@
   "keywords": [
     "TypeScript",
     "JSON Schema",
-    "OpenAPI"
+    "OpenAPI",
+    "dtsgenerator",
+    "dtsgen"
   ],
-  "author": "horiuchi",
+  "author": "laurelnaiad",
+  "contributors": [ "horiuchi" ],
   "license": "MIT",
-  "homepage": "https://github.com/horiuchi/dtsgenerator",
+  "homepage": "https://github.com/laurelnaiad/dtsintergen",
   "repository": {
     "type": "git",
-    "url": "git@github.com:horiuchi/dtsgenerator.git"
+    "url": "git@github.com:laurelnaiad/dtsintergen.git"
   },
   "bugs": {
-    "url": "https://github.com/horiuchi/dtsgenerator/issues"
+    "url": "https://github.com/laurelnaiad/dtsintergen/issues"
   },
   "engines": {
     "node": ">= 6.0"

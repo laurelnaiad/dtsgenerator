@@ -35,11 +35,11 @@ Options:
 
   Examples:
 
-    $ dtsgen --help
-    $ dtsgen --out types.d.ts schema/**/*.schema.json
-    $ cat schema1.json | dtsgen
-    $ dtsgen -o swaggerSchema.d.ts --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v2.0/schema.json
-    $ dtsgen -o petstore.d.ts -n PetStore --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/yaml/petstore.yaml
+    $ dtsintergen --help
+    $ dtsintergen --out types.d.ts schema/**/*.schema.json
+    $ cat schema1.json | dtsintergen
+    $ dtsintergen -o swaggerSchema.d.ts --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v2.0/schema.json
+    $ dtsintergen -o petstore.d.ts -n PetStore --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/yaml/petstore.yaml
 `);
     });
 

@@ -1,15 +1,18 @@
-# dtsgenerator
+# dtsintergen
 
 TypeScript d.ts file generator from JSON Schema file or OpenAPI(Swagger) spec file.
 
-[![nodejs version](https://img.shields.io/node/v/dtsgenerator.svg)](#)
-[![npm version](https://badge.fury.io/js/dtsgenerator.svg)](https://www.npmjs.com/package/dtsgenerator)
-[![build status](https://travis-ci.org/horiuchi/dtsgenerator.svg?branch=master)](https://travis-ci.org/horiuchi/dtsgenerator)
-[![Coverage Status](https://coveralls.io/repos/github/horiuchi/dtsgenerator/badge.svg?branch=master)](https://coveralls.io/github/horiuchi/dtsgenerator?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/horiuchi/dtsgenerator.svg)](https://greenkeeper.io/)
-[![npm download count](https://img.shields.io/npm/dt/dtsgenerator.svg)](https://www.npmjs.com/package/dtsgenerator)
-[![dtsgenerator Dev Token](https://badge.devtoken.rocks/dtsgenerator)](https://devtoken.rocks/package/dtsgenerator)
-[![MIT license](https://img.shields.io/npm/l/dtsgenerator.svg)](#)
+**This is a FORK of [horiuchi/dtsgenerator](https://github.com/horiuchi/dtsgenerator).** When the `intersection` flag is set, this fork generates an alternate rendering of the d.ts files using Typescript's [`Intersection Types`](https://www.typescriptlang.org/docs/handbook/advanced-types.html#intersection-types). You must use the `-i` flag to enable intersection. See [test/intersection_test.ts](test/intersection_test.ts).
+
+See the most recent [commits on `master`](https://github.com/laurelnaiad/dtsintergen/commits/master) branch for diff between `dtsgenerator` and `dtsintergen`.
+
+[![nodejs version](https://img.shields.io/node/v/dtsintergen.svg)](#)
+[![npm version](https://badge.fury.io/js/dtsintergen.svg)](https://www.npmjs.com/package/dtsintergen)
+[![build status](https://travis-ci.org/laurelnaiad/dtsintergen.svg?branch=master)](https://travis-ci.org/laurelnaiad/dtsintergen)
+[![Coverage Status](https://coveralls.io/repos/github/laurelnaiad/dtsintergen/badge.svg?branch=master)](https://coveralls.io/github/laurelnaiad/dtsintergen?branch=master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/laurelnaiad/dtsintergen.svg)](https://greenkeeper.io/)
+[![npm download count](https://img.shields.io/npm/dt/dtsintergen.svg)](https://www.npmjs.com/package/dtsintergen)
+[![MIT license](https://img.shields.io/npm/l/dtsintergen.svg)](#)
 
 ## Table of Contents
 
@@ -22,14 +25,12 @@ TypeScript d.ts file generator from JSON Schema file or OpenAPI(Swagger) spec fi
 
 ## Install
 
-    npm install -g dtsgenerator
-
-- [Releases](https://github.com/horiuchi/dtsgenerator/releases)
+    npm install -g dtsintergen
 
 ## Usage
 
 ```
-$ dtsgen --help
+$ dtsintergen --help
 Usage: script [options] <file ... | file patterns using node-glob>
 
 Options:
@@ -44,11 +45,12 @@ Options:
 
   Examples:
 
-    $ dtsgen --help
-    $ dtsgen --out types.d.ts schema/**/*.schema.json
-    $ cat schema1.json | dtsgen
-    $ dtsgen -o swaggerSchema.d.ts --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v2.0/schema.json
-    $ dtsgen -o petstore.d.ts -n PetStore --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/yaml/petstore.yaml
+    $ dtsintergen --help
+    $ dtsintergen --out types.d.ts schema/**/*.schema.json
+    $ dtsintergen -i --out types.d.ts schema/**/*.schema.json # <=== !!! enables intersection types !!!
+    $ cat schema1.json | dtsintergen
+    $ dtsintergen -o swaggerSchema.d.ts --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v2.0/schema.json
+    $ dtsintergen -o petstore.d.ts -n PetStore --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/yaml/petstore.yaml
 ```
 
 ## Advance Usage
@@ -57,7 +59,7 @@ For customize the output type name.
 
 ### Install for library
 
-    npm install -S dtsgenerator
+    npm install -S dtsgen-intersection
 
 ### Usage for library
 
@@ -66,7 +68,7 @@ This is not usual example...
 
 https://github.com/horiuchi/dtsgenerator/blob/master/example/add-prefix/index.ts
 ```js
-import dtsGenerator, { DefaultTypeNameConvertor, SchemaId } from 'dtsgenerator';
+import dtsGenerator, { DefaultTypeNameConvertor, SchemaId } from 'dtsintergen';
 import * as fs from 'fs';
 
 const filePath = '../../test/snapshots/json-schema-draft-04/schema/schema.json';
@@ -187,3 +189,7 @@ Output debug message by [debug](https://www.npmjs.com/package/debug) library.
 `dtsgenerator` is licensed under the MIT license.
 
 Copyright &copy; 2016-2019, [Hiroki Horiuchi](mailto:horiuchi.g@gmail.com)
+
+`dtsintergen` is licensed under the MIT license.
+
+Copyright &copy; 2017-2019, [Daphne Maddox](mailto:laurelnaiad@gmail.com)
