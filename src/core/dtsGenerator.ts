@@ -1,4 +1,5 @@
 import Debug from 'debug';
+import opts from '../commandOptions';
 import { tilde } from '../jsonPointer';
 import { getSubSchema, JsonSchema, NormalizedSchema, Schema } from './jsonSchema';
 import ReferenceResolver from './referenceResolver';
@@ -76,9 +77,13 @@ export default class DtsGenerator {
                         const ref = this.resolver.dereference(sub.$ref);
                         sub = this.normalizeContent(ref).content;
                     }
-                    utils.mergeSchema(work, sub);
+                    if (!opts.intersection) {
+                        utils.mergeSchema(work, sub);
+                    }
                 }
-                delete content.allOf;
+                if (!opts.intersection) {
+                    delete content.allOf;
+                }
                 content = work;
             }
             if (content.type === undefined && (content.properties || content.additionalProperties)) {
@@ -157,12 +162,16 @@ export default class DtsGenerator {
             return this.convertor.outputTypeIdName(refSchema, this.currentSchema, terminate);
         }
         if (content.anyOf || content.oneOf) {
-            this.generateArrayedType(schema, content.anyOf, '/anyOf/', terminate);
-            this.generateArrayedType(schema, content.oneOf, '/oneOf/', terminate);
+            this.generateArrayedType(schema, content.anyOf, ' | ', '/anyOf/', terminate);
+            this.generateArrayedType(schema, content.oneOf, ' | ', '/oneOf/', terminate);
+            return;
+        }
+        if (content.allOf && opts.intersection) {
+            this.generateArrayedType(schema, content.allOf, ' & ', '/allOf/', terminate);
             return;
         }
         if (content.enum) {
-            this.convertor.outputArrayedType(schema, content.enum, (value) => {
+            this.convertor.outputArrayedType(schema, content.enum, ' | ', (value) => {
                 if (content.type === 'integer' || content.type === 'number') {
                     this.convertor.outputRawValue('' + value);
                 } else {
@@ -180,9 +189,9 @@ export default class DtsGenerator {
             this.generateType(schema, terminate);
         }
     }
-    private generateArrayedType(baseSchema: NormalizedSchema, contents: JsonSchema[] | undefined, path: string, terminate: boolean): void {
+    private generateArrayedType(baseSchema: NormalizedSchema, contents: JsonSchema[] | undefined, separator: string, path: string, terminate: boolean): void {
         if (contents) {
-            this.convertor.outputArrayedType(baseSchema, contents, (_content, index) => {
+            this.convertor.outputArrayedType(baseSchema, contents, separator, (_content, index) => {
                 const schema = this.normalizeContent(baseSchema, path + index);
                 if (schema.id.isEmpty()) {
                     this.generateTypeProperty(schema, false);
@@ -255,7 +264,7 @@ export default class DtsGenerator {
                 schema.content.type = types[0];
                 this.generateType(schema, terminate, outputOptional);
             } else {
-                this.convertor.outputArrayedType(schema, types, (t) => {
+                this.convertor.outputArrayedType(schema, types, ' | ', (t) => {
                     this.generateTypeName(schema, t, false, false);
                 }, terminate);
             }

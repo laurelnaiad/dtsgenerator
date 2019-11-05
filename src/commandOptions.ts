@@ -10,6 +10,7 @@ export class CommandOptions {
     public stdin?: boolean;
     public out?: string;
     public namespace?: string;
+    public intersection?: boolean;
 
     public isReadFromStdin(): boolean {
         return this.stdin || this.files.length === 0 && this.urls.length === 0;
@@ -31,6 +32,7 @@ export function clear(): void {
     opts.stdin = undefined;
     opts.out = undefined;
     opts.namespace = undefined;
+    opts.intersection = undefined;
 }
 
 function parse(o: CommandOptions, argv: string[]): commander.Command {
@@ -49,6 +51,7 @@ function parse(o: CommandOptions, argv: string[]): commander.Command {
         .option('--stdin', 'read stdin with other files or urls.')
         .option('-o, --out <file>', 'output d.ts filename.')
         .option('-n, --namespace <namespace>', 'use root namespace instead of definitions or components.schema from OpenAPI, or -n "" to suppress namespaces.')
+        .option('-i, --intersection', 'output intersection types for `allOf` and `anyOf` schema.')
         .on('--help', () => {
             /* tslint:disable:no-console */
             console.log('');
@@ -68,6 +71,7 @@ function parse(o: CommandOptions, argv: string[]): commander.Command {
     o.stdin = res.stdin;
     o.out = res.out;
     o.namespace = res.namespace;
+    o.intersection = res.intersection;
     return command;
 }
 
