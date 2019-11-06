@@ -22,15 +22,21 @@ describe('output command help test', () => {
     it('should output command help ', () => {
         const command = initialize(['node', 'script.js']);
         command.outputHelp();
-        assert.equal(content, `Usage: script [options] <file ... | file patterns using node-glob>
+        assert.equal(
+            // travis env. puts line breaks in that don't appear on a mac
+            content.replace(/\n/g, ' ').replace(/\s\s+/g, ' '),
+            `Usage: script [options] <file ... | file patterns using node-glob>
 
 Options:
   -V, --version                output the version number
   --url <url>                  input json schema from the url. (default: [])
   --stdin                      read stdin with other files or urls.
   -o, --out <file>             output d.ts filename.
-  -n, --namespace <namespace>  use root namespace instead of definitions or components.schema from OpenAPI, or -n "" to suppress namespaces.
-  -i, --intersection           output intersection types for \`allOf\` and \`anyOf\` schema.
+  -n, --namespace <namespace>  use root namespace instead of definitions or
+                               components.schema from OpenAPI, or -n "" to
+                               suppress namespaces.
+  -i, --intersection           output intersection types for \`allOf\` and
+                               \`anyOf\` schema.
   -h, --help                   output usage information
 
   Examples:
@@ -40,7 +46,7 @@ Options:
     $ cat schema1.json | dtsintergen
     $ dtsintergen -o swaggerSchema.d.ts --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v2.0/schema.json
     $ dtsintergen -o petstore.d.ts -n PetStore --url https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v2.0/yaml/petstore.yaml
-`);
+`.replace(/\n/g, ' ').replace(/\s\s+/g, ' '));
     });
 
 });
