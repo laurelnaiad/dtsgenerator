@@ -14,6 +14,10 @@ cache:
   directories:
     - node_module
 
+before_install:
+- nvm install $NODE_VERSION
+- node --version
+
 script:
   - npm run build
   - npm run clean
