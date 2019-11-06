@@ -4,12 +4,19 @@ sudo: false
 
 node_js:
   - "8"
-  - "10"
-  - "12"
+
+env:
+- NODE_VERSION=8
+- NODE_VERSION=10
+- NODE_VERSION=12.13.0
 
 cache:
   directories:
     - node_module
+
+before_install:
+- nvm install $NODE_VERSION
+- node --version
 
 script:
   - npm run build
@@ -17,3 +24,15 @@ script:
   - npm test
 
 after_success: npm run coverage
+
+deploy:
+  - provider: npm
+    skip_cleanup: true
+    on:
+      tags: true
+      all_branches: true
+      condition: $NODE_VERSION = 12.13.0 && $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+
+      repo: laurelnaiad/dtsintergen
+    email: laurelnaiad@gmail.com
+    api_key:
+      secure: ez7ytleperIHK5osCxbYA4GD6DHXMZkvsvV/QrWb67G37bh547ScMMi1tuLbU7a6S3Gk2svykeh1euyqQ94YJKJfbxWSyr/aXj+57jlU/4D/xqx8bGctpRAAXexPWLVjq4djP3V/uoMVue8Q93/hZGDKfu0hBPypt5cyeR2eBWQhGJmbMxB+WmMSLtihUYoXYMTs1n77jjmEvWF7tYx+w/W74VEc7e4dR3kdjC0q1Zo+hIk/YK7pqU7PIIiUWNYDKWIiwwCdiTLk9A6OmTCLjwtwXjqGu9GhY1kYLha4PkXM0MOGpjRurc4J3QS+Xr+4Ptt5WMxQSQyIh0bwmXN2df3nlPoJW+DlbU3MaxT/cUI1LgnWcJYs9KKYOZ06+ZRNX7Ysv1WYkMh2YockZdk3BajehCfdYnxs+Wd1tn+BpioS42lpNTsnh8f4EwoxlOx/2NgG7tBY5Qa117BYqAyYFFEI+/10ktPn9srkRunagrdEOxaLTmuR2IqOSi4AVqIVELrTATbZEGApSJdWXJ6Z9zJV2kZ/msys2C/bPAKdJHjJNTe9JqlX1orfWjBpzgI7Nxta6O6u30qv7ZiCCXmkyX0nzF1MRAV77THbp0OPyAPFkA0auFElHjw+Zwhtiu8yL1MRsQAJhuiVklKJkX4kbjp6Ul3CCn8EEiq/4IwWwBQ=
