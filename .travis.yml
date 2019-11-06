@@ -4,8 +4,11 @@ sudo: false
 
 node_js:
   - "8"
-  - "10"
-  - "12.13.0"
+
+env:
+- NODE_VERSION=8
+- NODE_VERSION=10
+- NODE_VERSION=12.13.0
 
 cache:
   directories:
