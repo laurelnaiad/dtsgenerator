@@ -1,3 +1,5 @@
+import Debug from 'debug';
+import opts from '../commandOptions';
 import * as JsonPointer from '../jsonPointer';
 import SchemaId from './schemaId';
 import { normalizeTypeName } from './typeNameConvertor';
@@ -10,6 +12,8 @@ interface ParameterObject { name: string; in: string; required?: boolean; schema
 type Parameter = ParameterObject | { $ref?: string; };
 
 export type SchemaType = 'Draft04' | 'Draft07';
+
+const debug = Debug('dtsintergen');
 
 export interface Schema {
     type: SchemaType;
@@ -122,6 +126,15 @@ export function searchAllSubSchema(schema: Schema, onFoundSchema: (subSchema: Sc
             const schemaId = new SchemaId(s.$ref, parentIds);
             s.$ref = schemaId.getAbsoluteId();
             onFoundReference(schemaId);
+        }
+        if (opts.allDefs) {
+            // feign a reference to all definitions so that all of them
+            // are generated
+            if (paths[paths.length - 2] === 'definitions') {
+                const schemaId = new SchemaId(paths.join('/'), parentIds);
+                debug('found def.:' + schemaId.getAbsoluteId());
+                onFoundReference(schemaId);
+            }
         }
 
         walkArray(s.allOf, paths.concat('allOf'), parentIds);

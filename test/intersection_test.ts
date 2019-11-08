@@ -7,6 +7,7 @@ describe('intersection test', () => {
 
     beforeEach(() => {
         opts.intersection = true;
+        opts.allDefs = true;
     });
 
     afterEach(() => {
@@ -44,4 +45,45 @@ describe('intersection test', () => {
 `;
         assert.equal(result, expected, result);
     });
+
+    it('two namespace test', async () => {
+        const schema1: JsonSchemaOrg.Draft04.Schema = {
+            id: `my_ns`,
+            definitions: {
+                A: {
+
+                    type: 'array',
+                    items: {
+                        $ref: `my_other_ns#/definitions/B`,
+                    },
+                },
+            },
+        };
+
+        const schema2: JsonSchemaOrg.Draft04.Schema = {
+            id: `my_other_ns`,
+            definitions: {
+                B: { type: 'string' },
+            },
+        };
+
+        const result = await dtsgenerator({ contents: [schema1, schema2] });
+        const x =
+`declare type MyNs = any;
+declare namespace MyNs {
+    namespace Definitions {
+        export type A = MyOtherNs.Definitions.B[];
+    }
+}
+declare type MyOtherNs = any;
+declare namespace MyOtherNs {
+    namespace Definitions {
+        export type B = string;
+    }
+}
+`;
+        assert.equal(result, x, result);
+
+    });
+
 });

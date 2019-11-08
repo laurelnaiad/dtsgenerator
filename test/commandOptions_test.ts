@@ -37,6 +37,7 @@ Options:
                                suppress namespaces.
   -i, --intersection           output intersection types for \`allOf\` and
                                \`anyOf\` schema.
+  -a, --allDefs                generate output for all \`definitions\` schema, even those not referenced.
   -h, --help                   output usage information
 
   Examples:

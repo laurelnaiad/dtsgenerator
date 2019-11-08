@@ -11,6 +11,7 @@ export class CommandOptions {
     public out?: string;
     public namespace?: string;
     public intersection?: boolean;
+    public allDefs?: boolean;
 
     public isReadFromStdin(): boolean {
         return this.stdin || this.files.length === 0 && this.urls.length === 0;
@@ -33,6 +34,7 @@ export function clear(): void {
     opts.out = undefined;
     opts.namespace = undefined;
     opts.intersection = undefined;
+    opts.allDefs = undefined;
 }
 
 function parse(o: CommandOptions, argv: string[]): commander.Command {
@@ -52,6 +54,8 @@ function parse(o: CommandOptions, argv: string[]): commander.Command {
         .option('-o, --out <file>', 'output d.ts filename.')
         .option('-n, --namespace <namespace>', 'use root namespace instead of definitions or components.schema from OpenAPI, or -n "" to suppress namespaces.')
         .option('-i, --intersection', 'output intersection types for `allOf` and `anyOf` schema.')
+        .option('-a, --allDefs', 'generate output for all `definitions` schema, even those not referenced.')
+
         .on('--help', () => {
             /* tslint:disable:no-console */
             console.log('');
@@ -72,6 +76,7 @@ function parse(o: CommandOptions, argv: string[]): commander.Command {
     o.out = res.out;
     o.namespace = res.namespace;
     o.intersection = res.intersection;
+    o.allDefs = res.allDefs;
     return command;
 }
 

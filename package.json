@@ -32,7 +32,9 @@
     "dtsgen"
   ],
   "author": "laurelnaiad",
-  "contributors": [ "horiuchi" ],
+  "contributors": [
+    "horiuchi"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/laurelnaiad/dtsintergen",
   "repository": {
