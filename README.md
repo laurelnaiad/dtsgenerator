@@ -4,7 +4,7 @@ TypeScript d.ts file generator from JSON Schema file or OpenAPI(Swagger) spec fi
 
 **This is a FORK of [horiuchi/dtsgenerator](https://github.com/horiuchi/dtsgenerator).** When the `intersection` flag is set, this fork generates an alternate rendering of the d.ts files using Typescript's [`Intersection Types`](https://www.typescriptlang.org/docs/handbook/advanced-types.html#intersection-types). You must use the `-i` flag to enable intersection. See [test/intersection_test.ts](test/intersection_test.ts).
 
-See the most recent [commits on `master`](https://github.com/laurelnaiad/dtsintergen/commits/master) branch for diff between `dtsgenerator` and `dtsintergen`.
+See the most recent [commits on `master`](https://github.com/laurelnaiad/dtsintergen/commits/master) branch for diff between `dtsgenerator` and `dtsintergen`. The version number of dtsintergen will correspond to the version of dtsgenerator from which it is based, down to the minor version. I.e. 2.3.x of dtsintergen corresponds to 2.3.x of dtsgenerator. The patch numbers (x) in the preceding example, are not in sync.
 
 [![nodejs version](https://img.shields.io/node/v/dtsintergen.svg)](#)
 [![npm version](https://badge.fury.io/js/dtsintergen.svg)](https://www.npmjs.com/package/dtsintergen)

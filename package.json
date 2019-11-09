@@ -1,6 +1,6 @@
 {
   "name": "dtsintergen",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "TypeScript d.ts file generator for JSON Schema files, with generation of intersection types. Fork of horiuchi/dtsgenerator.",
   "bin": {
     "dtsintergen": "./bin/dtsintergen"
